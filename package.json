@@ -1,0 +1,23 @@
+{
+  "name": "Wialon",
+  "version": "0.0.1",
+  "description": "Wialon library, compatible with Wialon Hosting/Local",
+  "devDependencies": {
+    "copyfiles": "0.1.0",
+    "jake": "~8.0.10",
+    "uglify-js": "~2.4.16"
+  },
+  "main": "dist/wialon-src.js",
+  "style": "dist/wialon.css",
+  "scripts": {
+    "prepublish": "jake build"
+  },
+  "keywords": [
+  ],
+  "licenses": [
+    {
+    "type": "MIT",
+    "url": "/blob/master/LICENSE"
+    }
+  ]
+}

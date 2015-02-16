@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Wialon JS example</title>
+	<link rel="stylesheet" href="">
+
+	<script src="js/wialon-src.js"></script>
+</head>
+<body>
+
+
+	<script>
+		var sess = new W.Session('https://hst-api.wialon.com', {
+			eventsTimeout: 5
+		});
+
+		sess.login('shmi_test', 'test', '', function (data) {
+			console.log('login callback', data);
+		});
+
+	</script>
+</body>
+</html>
