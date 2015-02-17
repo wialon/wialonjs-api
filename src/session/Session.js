@@ -8,11 +8,14 @@ W.Session = W.Evented.extend({
     eventsTimeout: 10,
   },
 
-  _request: null,
-
   _sid: null,
-
+  _request: null,
   _serverTime: 0,
+  _eventsInterval: 0,
+
+  _classes: {},
+  _items: {},
+
 
   initialize: function (url, options) {
     options = W.setOptions(this, options);
@@ -32,8 +35,8 @@ W.Session = W.Evented.extend({
 
       this._request.send("/wialon/ajax.html?svc=core/login",
         {params: params},
-        W.bind(this._loginCallback, this, callback),
-        W.bind(this._loginCallback, this, callback)
+        this._loginCallback.bind(this, callback),
+        this._loginCallback.bind(this, callback)
       );
     }
 
@@ -46,20 +49,19 @@ W.Session = W.Evented.extend({
     } else {
       this._sid = data.eid;
       this._serverTime = data.tm;
+      this._classes = data._classes;
 
-      // ToDo: start event timer
+      // start eventss timer
       if (this.options.eventsTimeout) {
-        setInterval(
-          W.bind(this.getEvents, this),
+        this._eventsInterval = setInterval(
+          this.getEvents.bind(this),
           this.options.eventsTimeout * 1000
         );
       }
-
-
     }
 
     // return data in callback
-    callback(data);
+    callback && callback(data);
   },
 
   getEvents: function () {
@@ -69,12 +71,41 @@ W.Session = W.Evented.extend({
         this._getEventsCallback,
         this._getEventsCallback
       );
-
     }
   },
 
   _getEventsCallback: function (data) {
     this._serverTime = data.tm;
+    if (data.events.length > 0) {
+      debugger;
+    }
+  },
+
+  updateDataFlags: function (spec, callback) {
+    if (this._sid) {
+      var params = {
+        spec: spec
+      };
+
+      this._request.send("/wialon/ajax.html?svc=core/update_data_flags",
+        {params: params, sid: this._sid},
+        this._updateDataFlagsCallback.bind(this, callback),
+        this._updateDataFlagsCallback.bind(this, callback)
+      );
+    }
+  },
+
+  _updateDataFlagsCallback: function (callback, items) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].d) {
+        this._items[items[i].i] = items[i].d;
+      } else if (items[i].i in this._items) {
+        this._items[items[i].i] = null;
+        delete this._items[items[i].i];
+      }
+      // ToDo: generate arrays by type?...
+    }
+    callback && callback(items);
   }
 
 });

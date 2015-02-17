@@ -16,8 +16,12 @@
 			eventsTimeout: 5
 		});
 
-		sess.login('shmi_test', 'test', '', function (data) {
+		sess.login('spev_test', '123', '', function (data) {
 			console.log('login callback', data);
+
+			sess.updateDataFlags([{"type":"type","data":"avl_unit","flags":0x401,"mode":0}], function (data) {
+				console.log('updateDataFlags callback', data);
+			});
 		});
 
 	</script>

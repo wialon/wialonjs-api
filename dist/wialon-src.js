@@ -1,5 +1,5 @@
 /*
- Wialon 0.0.1, a JS library for Wialon
+ Wialon 0.0.1 (39981ca), a JS library for Wialon
  (c) 2015 Aleksey Shmigelski
 */
 (function (window) {
@@ -469,6 +469,7 @@ W.Mixin = {Events: proto};
 W.Request = W.Class.extend({
 
   options: {},
+
   _id: 0,
   _url: '',
   _io: null,
@@ -486,31 +487,26 @@ W.Request = W.Class.extend({
     // create iframe
     this._io = document.createElement('iframe');
     this._io.style.display = 'none';
-    if (window.attachEvent) {
-      this._io.attachEvent('onload', W.bind(this._frameLoaded, this));
-    } else {
-      this._io.addEventListener("load", W.bind(this._frameLoaded, this), false);
-    }
-    this._io.setAttribute("src", this._url);
+    this._io.setAttribute('src', this._url);
+    // bind events
+    this._io.addEventListener("load", this._frameLoaded.bind(this), false);
+    window.addEventListener('message', this._receiveMessage.bind(this), false);
+    // append iframe to body
     document.body.appendChild(this._io);
-
-    if (window.addEventListener) {
-      window.addEventListener("message", W.bind(this._recieveMessage, this), false);
-    } else {
-      window.attachEvent("onmessage", W.bind(this._recieveMessage, this));
-    }
   },
 
-  send: function (url, params, success, error, timeout) {
-    var data = {id: ++this._counter, url: url, params: this._urlEncodeData(params), source: this._id};
+  send: function (url, params, success, error) {
+    var data = {
+      id: ++this._counter,
+      url: url,
+      params: this._urlEncodeData(params),
+      source: this._id
+    };
+    
     var win = this._io.contentWindow;
     if (win) {
       var sdata = JSON.stringify(data);
-      this._callbacks[this._counter] = [success, error, sdata, 0, timeout];
-      
-      if (timeout) {
-        this._callbacks[this._counter].push(setTimeout(W.bind(this._timeout, this, this._counter), timeout * 1000));
-      }
+      this._callbacks[this._counter] = [success, error, sdata, 0];
       
       if (this._frameReady){
         win.postMessage(sdata, this._url);
@@ -521,14 +517,14 @@ W.Request = W.Class.extend({
   },
 
   _createFullUrl: function(url) {
-    if (document && !url) {
+    if (!url) {
       var loc = document.location;
       url = loc.protocol + "//" + loc.hostname + (loc.port.length ? ":" + loc.port : "");
     }
     return url;
   },
 
-  _recieveMessage: function() {
+  _receiveMessage: function() {
     var data = {error: -1};
     try {
       data = JSON.parse(event.data);
@@ -580,12 +576,11 @@ W.Request = W.Class.extend({
   _frameLoaded: function () {
     if (!this._frameReady) {
       this._io.contentWindow.postMessage("{id: 0, source:'" + this._id + "'}", this._url);
-      return;
+    } else {
+      while (this._requests.length) {
+        this._io.contentWindow.postMessage(this._requests.pop(), this._url);
+      }
     }
-    for (var i = 0; i < this._requests.length; i++) {
-      this._io.contentWindow.postMessage(this._requests[i], this._url);
-    }
-    this._requests = [];
   },
 
   _timeout: function (id) {
@@ -631,11 +626,14 @@ W.Session = W.Evented.extend({
     eventsTimeout: 10,
   },
 
-  _request: null,
-
   _sid: null,
-
+  _request: null,
   _serverTime: 0,
+  _eventsInterval: 0,
+
+  _classes: {},
+  _items: {},
+
 
   initialize: function (url, options) {
     options = W.setOptions(this, options);
@@ -655,8 +653,8 @@ W.Session = W.Evented.extend({
 
       this._request.send("/wialon/ajax.html?svc=core/login",
         {params: params},
-        W.bind(this._loginCallback, this, callback),
-        W.bind(this._loginCallback, this, callback)
+        this._loginCallback.bind(this, callback),
+        this._loginCallback.bind(this, callback)
       );
     }
 
@@ -669,20 +667,19 @@ W.Session = W.Evented.extend({
     } else {
       this._sid = data.eid;
       this._serverTime = data.tm;
+      this._classes = data._classes;
 
-      // ToDo: start event timer
+      // start eventss timer
       if (this.options.eventsTimeout) {
-        setInterval(
-          W.bind(this.getEvents, this),
+        this._eventsInterval = setInterval(
+          this.getEvents.bind(this),
           this.options.eventsTimeout * 1000
         );
       }
-
-
     }
 
     // return data in callback
-    callback(data);
+    callback && callback(data);
   },
 
   getEvents: function () {
@@ -692,12 +689,41 @@ W.Session = W.Evented.extend({
         this._getEventsCallback,
         this._getEventsCallback
       );
-
     }
   },
 
   _getEventsCallback: function (data) {
     this._serverTime = data.tm;
+    if (data.events.length > 0) {
+      debugger;
+    }
+  },
+
+  updateDataFlags: function (spec, callback) {
+    if (this._sid) {
+      var params = {
+        spec: spec
+      };
+
+      this._request.send("/wialon/ajax.html?svc=core/update_data_flags",
+        {params: params, sid: this._sid},
+        this._updateDataFlagsCallback.bind(this, callback),
+        this._updateDataFlagsCallback.bind(this, callback)
+      );
+    }
+  },
+
+  _updateDataFlagsCallback: function (callback, items) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].d) {
+        this._items[items[i].i] = items[i].d;
+      } else if (items[i].i in this._items) {
+        this._items[items[i].i] = null;
+        delete this._items[items[i].i];
+      }
+      // ToDo: generate arrays by type?...
+    }
+    callback && callback(items);
   }
 
 });
