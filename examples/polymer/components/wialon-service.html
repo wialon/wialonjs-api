@@ -1,0 +1,34 @@
+<link rel="import" href="https://www.polymer-project.org/0.8/components/polymer/polymer.html">
+
+<polymer-element name="wialon-service" attributes="units">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+    </template>
+    <script src="./../../../dist/wialon-src.js"></script>
+    <script>
+    Polymer('wialon-service', {
+        created: function() {
+            var self = this;
+            // init Wialon session
+            self.session = new W.Session('https://hst-api.wialon.com', {
+                eventsTimeout: 5
+            });
+            // login
+            self.session.execute('core/login', {user: 'wialon_test', password: 'wialon_test'}, function (data) {
+                console.log('login callback', data);
+                // load all unit in session
+                var params = {spec:[{'type':'type', 'data':'avl_unit', 'flags':0x411, 'mode':0}]};
+                self.session.execute('core/update_data_flags', params, function (data) {
+                    console.log('updateDataFlags callback', data);
+                    self.units = self.session.getItems('avl_unit');
+                });
+
+            });
+        }
+    });
+  </script>
+</polymer-element>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <title>Wialon Polymer</title>
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="https://www.polymer-project.org/0.8/components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="https://www.polymer-project.org/0.8/components/core-list/core-list.html"/>
+
+    <link rel="import" href="components/wialon-service.html">
+    <style>
+        html, body, div{
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        core-list {
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        .item {
+            height: 35px;
+        }
+
+        .item .content {
+            position: absolute;
+            left: 35px;
+            top: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body unresolved>
+    <template is="auto-binding">
+        <wialon-service units="{{units}}"></wialon-service>
+        <core-list data="{{units}}" height="30">
+            <template>
+                <div class="item" data-item="{{index}}">
+                    <img src="https://hst-api.wialon.com{{model.uri}}?b=32"/>
+                    <div class="content">
+                        <div>{{model.nm}}</div>
+                        <div>{{model.pos.y}} {{model.pos.x}}</div>
+                    </div>
+                </div>
+            </template>
+        </core-list>
+    </template>
+</body>
+</html>

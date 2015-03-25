@@ -1,0 +1,19 @@
+{
+    "node": true,
+    "browser": true,
+    "esnext": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "regexp": true,
+    "undef": "vars",
+    "unused": "vars",
+    "trailing": true,
+    "multistr": true,
+    "smarttabs": true,
+    "predef": ["W"],
+    "expr": true,
+    "sub": true
+}

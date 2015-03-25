@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+		<link rel="stylesheet" href="css/style.css"/>
+	</head>
+	<body>
+		<div id="map" class="map"></div>
+		<div id="overlay" class="overlay">
+			<div class="login-form leaflet-popup-content-wrapper">
+				<h2>Locator Live</h2>
+				<p>Username: <input type="text" id="username" value="wialon_test"/></p>
+				<p>Password: <input type="password" id="password" value="test"/></p>
+				<p><input type="button" id="loginBtn" value="Login"/></p>
+			</div>
+		</div>
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<script src="../../dist/wialon-src.js"></script>
+		<script src="js/script.js"></script>
+		<script>
+			app.initialize();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,10 @@
+{
+	"preset": "google",
+	"validateIndentation": 4,
+	"maximumLineLength": 120,
+	"disallowMultipleVarDecl": null,
+
+	"requireCamelCaseOrUpperCaseIdentifiers": null,
+	"disallowSpacesInAnonymousFunctionExpression": null,
+	"requireLineFeedAtFileEnd": null
+}

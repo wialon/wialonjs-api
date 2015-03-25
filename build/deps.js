@@ -5,7 +5,8 @@ var deps = {
           'base/Class.js',
           'base/Events.js',
           'base/Request.js',
-          'session/Session.js'
+          'base/Session.js',
+          'api/core.js'
           ],
     desc: 'The core of the library, including OOP, events, basic units.'
   }
