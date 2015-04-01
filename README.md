@@ -1,10 +1,10 @@
-# wialonjs-api - lightweight and flexible wrapper for Wialon Remote API
+## wialonjs-api - lightweight and flexible wrapper for Wialon Remote API
 
 `wialonjs-api` helps you to work with Wialon Hosting and Wialon Local
 throught [Remote API](http://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/apiref)
 
-## Usage sample
-```
+### Usage sample
+```javascript
 <script scr='dist/wialon-src.js'></script>
 <script>
     // create Wialon session instance
@@ -27,16 +27,16 @@ throught [Remote API](http://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/api
 </script>
 ```
 
-## Demo
-Check included [examples](blob/master/examples)
+### Demo
+Check included [examples](examples)
 
-## wialonjs-api API
+### wialonjs-api API
 In progress..
 
-## Contribution
+### Contribution
 Feel free to pull request
 
-### Build
+#### Build
 We use [Jake](http://jakejs.com/) for building
 ```
 # global jake install
@@ -47,9 +47,9 @@ npm install
 jake
 ```
 
-### Code Conventions
+#### Code Conventions
 We use [JSHint](http://jshint.com/) and [JSCS](http://jscs.info/) to validate code.
 Run `jake jshint` and `jake jscs` to check
 
-## License
-[The MIT License](blob/master/LICENSE-MIT)
+### License
+[The MIT License](LICENSE-MIT)
