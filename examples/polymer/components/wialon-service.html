@@ -18,7 +18,7 @@
                 eventsTimeout: 5
             });
             // login
-            self.session.execute('core/login', {user: 'wialon_test', password: 'wialon_test'}, function (data) {
+            self.session.execute('core/login', {user: 'wialon_test', password: 'test'}, function (data) {
                 console.log('login callback', data);
                 // load all unit in session
                 var params = {spec:[{'type':'type', 'data':'avl_unit', 'flags':0x411, 'mode':0}]};
