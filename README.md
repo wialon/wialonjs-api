@@ -41,7 +41,7 @@ Feel free to pull request
 
 ### Build
 We use [Jake](http://jakejs.com/) for building
-```
+```bash
 # global jake install
 npm install -g jake
 # install dependencies
