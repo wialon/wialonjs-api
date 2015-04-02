@@ -818,9 +818,9 @@ W.Session = W.Evented.extend({
         for (var i = 0; i < items.length; i++) {
             if (items[i].d) {
                 if (!this._classItems[items[i].d.cls]) {
-                    this._classItems[ items[i].d.cls ] = [];
+                    this._classItems[items[i].d.cls] = [];
                 }
-                this._classItems[ items[i].d.cls ].push(items[i].d);
+                this._classItems[items[i].d.cls].push(items[i].d);
                 this._items[items[i].i] = items[i].d;
             } else {
                 this._onItemDeleted(items[i].i);
@@ -849,6 +849,14 @@ W.Session = W.Evented.extend({
             item = null;
             delete this._items[id];
         }
+    },
+
+    _destroy: function() {
+        this._sid = null;
+        this._url = null;
+        this._items = null;
+        this._classes = null;
+        this._classItems = null;
     }
 });
 
