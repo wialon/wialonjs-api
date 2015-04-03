@@ -2,6 +2,11 @@
   "name": "wialonjs-api",
   "version": "0.0.1",
   "description": "Wialon library, compatible with Wialon Hosting/Local",
+  "homepage": "http://sdk.wialon.com/libs/js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/wialon/wialonjs-api"
+  },
   "devDependencies": {
     "copyfiles": "0.1.0",
     "jake": "~8.0.10",

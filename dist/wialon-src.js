@@ -857,6 +857,8 @@ W.Session = W.Evented.extend({
         this._items = null;
         this._classes = null;
         this._classItems = null;
+        // clear interval
+        clearInterval(this._eventsInterval);
     }
 });
 
