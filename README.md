@@ -35,7 +35,6 @@ throught [Remote API](http://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/api
 
 ## API
 Library all library classes use `W` namespace.
-See [examples](examples) for more info.
 
 ### W.Session
 The central class of the API. Store all information about session, SID,
