@@ -529,7 +529,7 @@ W.Request = W.Class.extend({
         this._io.setAttribute('src', this._url);
 
         // bind events
-        this._io.addEventListener('load', this._frameLoaded.bind(this), false);
+        this._io.onload = this._frameLoaded.bind(this);
         window.addEventListener('message', this._receiveMessage.bind(this), false);
 
         // append iframe to body
@@ -539,7 +539,7 @@ W.Request = W.Class.extend({
     /** Execute simple Remote API request
      */
     api: function (svc, params, callback) {
-        this.send('/wialon/ajax.html?svc=' + svc, params, callback);
+        this.send('/wialon/ajax.html?svc=' + svc, params, callback, callback);
     },
 
     /** Process request sending
@@ -573,14 +573,14 @@ W.Request = W.Class.extend({
         return url;
     },
 
-    _receiveMessage: function() {
+    _receiveMessage: function(evt) {
         var data = {error: -1};
         try {
-            data = JSON.parse(event.data);
+            data = JSON.parse(evt.data);
         } catch (e) {
             try {
                 /* jshint evil: true */
-                data = eval('(' + event.data + ')');
+                data = eval('(' + evt.data + ')');
             } catch (e) {
                 W.logger('warn', 'Invalid JSON');
             }
