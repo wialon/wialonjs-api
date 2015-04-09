@@ -4,6 +4,11 @@ Lightweight and flexible wrapper for Wialon Remote API
 `wialonjs-api` helps you to work with Wialon Hosting and Wialon Local
 throught [Remote API](http://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/apiref)
 
+## Installation
+```bash
+npm install wialonjs-api
+```
+
 ## Usage sample
 ```html
 <script scr='dist/wialon-src.js'></script>
@@ -63,10 +68,12 @@ cache results, can execute `avl_event` automatically, etc.
 
 #### Methods
 * `execute` Execute Remote API request
+* `getBaseUrl` Return session base url (e.g. https://hst-api.wialon.com)
+* `getCurrentUser` Return currently logged in user
 * `getEvents` Get events from server (execute 'avl_evts' request). Run automaticaly if `options.eventsTimeout` != 0.
-* `getBaseUrl` Get session base url (e.g. https://hst-api.wialon.com)
-* `getItems` Get items loaded in session by type. Execute `core/update_data_flag` before use this method.
-* `getItem` Get items loaded in session by id. Execute `core/update_data_flag` before use this method.
+* `getItem` Return item loaded in session by id. Execute `core/update_data_flag` before use this method.
+* `getItems` Return items loaded in session filtered by type. Execute `core/update_data_flag` before use this method.
+* `getSid` Return session id or null if not logged in
 
 ### W.Request
 Helps to performs remote requests
@@ -129,7 +136,7 @@ a.greet("World");
 Various utility functions, used internally.
 
 ## Contribution
-Feel free to pull request
+Feel free to pull request into `dev` branch
 
 ### Build
 We use [Jake](http://jakejs.com/) for building

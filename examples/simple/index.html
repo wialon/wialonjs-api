@@ -9,22 +9,24 @@
 	<script src="../../dist/wialon-src.js"></script>
 </head>
 <body>
-
-
 	<script>
+		// enable debug messages
+		W.debug = true;
+		// init wialon session
 		var sess = new W.Session('https://hst-api.wialon.com', {
 			eventsTimeout: 5
 		});
-
+		// change 'user' and 'password' to your demo account
 		sess.execute('core/login', {user: 'wialon_test', password: 'test'}, function(data) {
 			console.log('login callback', data);
 
 			var params = {spec:[{"type":"type","data":"avl_unit","flags":0x401,"mode":0}]};
-			setInterval( function() {
+			setTimeout(function() {
+				// wait 2 sec and exec core_update_data_flags
 				sess.execute('core/update_data_flags', params);
-			}, 5000 );
+			}, 2000);
 		});
-
+		// listen events
 		sess
 			.on('messageRegistered', function() {
 				console.log(arguments);

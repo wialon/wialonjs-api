@@ -1,6 +1,6 @@
 {
   "name": "wialonjs-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Wialon library, compatible with Wialon Hosting/Local",
   "homepage": "http://sdk.wialon.com/libs/js",
   "repository": {

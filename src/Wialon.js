@@ -3,7 +3,7 @@
 
 var W = {
     version: '0.0.1',
-    debug: true
+    debug: false
 };
 
 function expose() {
