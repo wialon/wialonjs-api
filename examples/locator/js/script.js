@@ -132,7 +132,7 @@ var app = (function () {
 		document.getElementById('loginBtn').onclick = function () {
 			var user = document.getElementById('username').value;
 			var password = document.getElementById('password').value;
-			self.login(user, password);
+			self.login(user, password, 'http://hosting.shmi.dev:12019');
 		};
 		// create a map in the "map" div
 		map = L.map('map').setView([52.32728615559, 9.798388481140], 14);

@@ -880,18 +880,38 @@ W.Session = W.Evented.extend({
                     // data update event
                     } else if (evt.t === 'u') {
                         for (var k in evt.d) {
+                            var
+                                val, oldParams, nm;
                             if (k === 'prpu') {
+                                val = evt.d['prpu'];
+                                oldParams = W.extend({}, item.prp);
                                 // update custom propery
-                                W.extend(item['prp'], evt.d['prpu']);
-                            } else if (k === 'prms') {
-                                if (typeof evt.d['prms']['posinfo'] !== 'undefined') {
-                                    item.pos = evt.d['prms']['posinfo'].v;
-                                    if (typeof evt.d['prms']['speed'] !== 'undefined') {
-                                        item.pos.s = evt.d['prms']['speed'].v;
+                                for (nm in val) {
+                                    // simple form
+                                    if (val[nm] !== '') {
+                                        oldParams[nm] = val[nm];
+                                    } else if (nm in oldParams) {
+                                        delete oldParams[nm];
                                     }
+                                }
+                                item.prp = oldParams;
+                            } else if (k === 'prms') {
+                                val = evt.d['prms'];
+                                oldParams = W.extend({}, item.prms);
+                                for (nm in val) {
+                                    // simple form
+                                    if (typeof val[nm] === 'object') {
+                                        oldParams[nm] = val[nm];
+                                    } else if (typeof oldParams[nm] === 'object') {
+                                        oldParams[nm].at = val[nm];
+                                    }
+                                }
+                                item.prms = oldParams;
+                                this.fire('messageParamsChanged', evt);
+                                // check position changes
+                                if (typeof val.posinfo === 'object' || typeof val.speed === 'object') {
                                     this.fire('positionChanged', evt);
                                 }
-                                this.fire('messageParamsChanged', evt);
                             } else {
                                 item[k] = evt.d[k];
                             }
@@ -903,7 +923,7 @@ W.Session = W.Evented.extend({
                 } else if (evt.i === -3) {
                     // changed billing features avaible for current user
                     this._features = evt.d;
-                    this.fireEvent('featuresChanged');
+                    this.fire('featuresChanged');
                 }
             }
         }
