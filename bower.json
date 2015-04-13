@@ -1,0 +1,17 @@
+{
+  "name": "wialonjs-api",
+  "version": "0.0.2",
+  "description": "Wialon library, compatible with Wialon Hosting/Local",
+  "homepage": "http://sdk.wialon.com/libs/js/",
+  "authors": [
+    "Gurtam (http://gurtam.com)"
+  ],
+  "main": "dist/wialon-src.js",
+  "keywords": ["wialon", "api"],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}

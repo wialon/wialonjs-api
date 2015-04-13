@@ -5,6 +5,11 @@ Lightweight and flexible wrapper for Wialon Remote API
 throught [Remote API](http://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/apiref)
 
 ## Installation
+Using [Bower](http://bower.io/)
+```bash
+bower install wialonjs-api
+```
+Using [npm](https://www.npmjs.com/)
 ```bash
 npm install wialonjs-api
 ```
@@ -67,13 +72,24 @@ cache results, can execute `avl_event` automatically, etc.
 * `eventsTimeout` Timeout for auto executing `avl_evts` request. Set `0` to prevent `avl_evts` request sending. Default: 10 (sec).
 
 #### Methods
+* `checkFeature` Check if billing service is avaible for given session
 * `execute` Execute Remote API request
 * `getBaseUrl` Return session base url (e.g. https://hst-api.wialon.com)
 * `getCurrentUser` Return currently logged in user
 * `getEvents` Get events from server (execute 'avl_evts' request). Run automaticaly if `options.eventsTimeout` != 0.
+* `getFeatures` Return avaible billing services for given session
 * `getItem` Return item loaded in session by id. Execute `core/update_data_flag` before use this method.
 * `getItems` Return items loaded in session filtered by type. Execute `core/update_data_flag` before use this method.
 * `getSid` Return session id or null if not logged in
+
+#### Events
+`W.Session` fires following events
+* `itemChanged` item changed (renamed, flags changed etc.)
+* `itemDeleted` item deleted from Wialon
+* `positionChanged` item position changed
+* `featuresChanged` billing services avaible for current session changed
+* `lastMessageChanged` item's last message changed (new message obtained)
+* `messageParamsChanged` item's messages params changed
 
 ### W.Request
 Helps to performs remote requests
