@@ -69,27 +69,89 @@ cache results, can execute `avl_event` automatically, etc.
 ```
 
 #### Options
-* `eventsTimeout` Timeout for auto executing `avl_evts` request. Set `0` to prevent `avl_evts` request sending. Default: 10 (sec).
+<table>
+<tr>
+    <td>eventsTimeout</td>
+    <td>Timeout for auto executing `avl_evts` request. Set `0` to prevent `avl_evts` request sending. Default: 10 (sec).</td>
+</tr>
+</table>
 
 #### Methods
-* `checkFeature` Check if billing service is avaible for given session
-* `execute` Execute Remote API request
-* `getBaseUrl` Return session base url (e.g. https://hst-api.wialon.com)
-* `getCurrentUser` Return currently logged in user
-* `getEvents` Get events from server (execute 'avl_evts' request). Run automaticaly if `options.eventsTimeout` != 0.
-* `getFeatures` Return avaible billing services for given session
-* `getItem` Return item loaded in session by id. Execute `core/update_data_flag` before use this method.
-* `getItems` Return items loaded in session filtered by type. Execute `core/update_data_flag` before use this method.
-* `getSid` Return session id or null if not logged in
+<table>
+<tr>
+    <th>Name</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td><i>checkFeature</i></td>
+    <td>Check if billing service is avaible for given session</td>
+</tr>
+<tr>
+    <td><i>execute</i></td>
+    <td>Execute Remote API request</td>
+</tr>
+<tr>
+    <td><i>getBaseUrl</i></td>
+    <td>Return session base url (e.g. https://hst-api.wialon.com)</td>
+</tr>
+<tr>
+    <td><i>getCurrentUser</i></td>
+    <td>Return currently logged in user</td>
+</tr>
+<tr>
+    <td><i>getEvents</i></td>
+    <td>Get events from server (execute 'avl_evts' request). Run automaticaly if `options.eventsTimeout` != 0.</td>
+</tr>
+<tr>
+    <td><i>getFeatures</i></td>
+    <td>Return avaible billing services for given session</td>
+</tr>
+<tr>
+    <td><i>getItem</i></td>
+    <td>Return item loaded in session by id. Execute `core/update_data_flag` before use this method.</td>
+</tr>
+<tr>
+    <td><i>getItems</i></td>
+    <td>Return items loaded in session filtered by type. Execute `core/update_data_flag` before use this method.</td>
+</tr>
+<tr>
+    <td><i>getSid</i></td>
+    <td>Return session id or null if not logged in</td>
+</tr>
+</table>
 
 #### Events
 `W.Session` fires following events
-* `itemChanged` item changed (renamed, flags changed etc.)
-* `itemDeleted` item deleted from Wialon
-* `positionChanged` item position changed
-* `featuresChanged` billing services avaible for current session changed
-* `lastMessageChanged` item's last message changed (new message obtained)
-* `messageParamsChanged` item's messages params changed
+<table>
+<tr>
+    <th>Name</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td><i>itemChanged</i></td>
+    <td>item changed (renamed, flags changed etc.)</td>
+</tr>
+<tr>
+    <td><i>itemDeleted</i></td>
+    <td>item deleted from Wialon</td>
+</tr>
+<tr>
+    <td><i>positionChanged</i></td>
+    <td>item position changed</td>
+</tr>
+<tr>
+    <td><i>featuresChanged</i></td>
+    <td>billing services avaible for current session changed</td>
+</tr>
+<tr>
+    <td><i>lastMessageChanged</i></td>
+    <td>item's last message changed (new message obtained)</td>
+</tr>
+<tr>
+    <td><i>messageParamsChanged</i></td>
+    <td>item's messages params changed</td>
+</tr>
+</table>
 
 ### W.Request
 Helps to performs remote requests
@@ -122,8 +184,20 @@ Helps to performs remote requests
 ```
 
 #### Methods
-* `api` Execute simple Remote API request
-* `send` Process request sending
+<table>
+<tr>
+    <th>Name</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td><i>api</i></td>
+    <td>Execute simple Remote API request</td>
+</tr>
+<tr>
+    <td><i>send</i></td>
+    <td>Process request sending</td>
+</tr>
+</table>
 
 ### W.Class
 Powers the OOP facilities and is used to create library classes.
