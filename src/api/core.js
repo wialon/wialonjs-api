@@ -24,6 +24,14 @@ W.Session.prototype.api.core = {
         );
     },
 
+    logout: function (callback) {
+        // Call request
+        this._request.api('core/logout',
+            {params: {}, sid: this._sid},
+            this._logoutCallback.bind(this, callback)
+        );
+    },
+
     use_auth_hash: function(params, callback) {
         // Call request
         this._request.api('core/use_auth_hash',

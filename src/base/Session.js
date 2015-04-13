@@ -113,6 +113,34 @@ W.Session = W.Evented.extend({
         return this._currentUser;
     },
 
+    /** Fetch avaible billing services for given session
+    */
+    getFeatures: function() {
+        return this._features;
+    },
+
+    /** Check if billing service is avaible for given session
+    */
+    checkFeature: function(feature) {
+        if (!this._features || typeof this._features.svcs === 'undefined') {
+            return 0;
+        }
+        if (typeof this._features.svcs[feature] === 'undefined') {
+            // check billing plan for unlimited services
+            if (this._features.unlim === 1) {
+                return 1;
+            }
+            return 0;
+        }
+        var featureVal = this._features.svcs[feature];
+        if (featureVal === 1) {
+            return 1;
+        } else if (featureVal === 0) {
+            return -1;
+        }
+        return 0;
+    },
+
     _loginCallback: function (callback, data) {
         if (data.error) {
             W.logger('warn', 'Login error');
@@ -141,6 +169,19 @@ W.Session = W.Evented.extend({
         callback && callback(data);
     },
 
+    _logoutCallback: function (callback, data) {
+        if (data.error) {
+            W.logger('warn', 'Logout error');
+        } else {
+            W.logger('Logout success');
+
+            this._destroy();
+        }
+
+        // return data in callback
+        callback && callback(data);
+    },
+
     _getEventsCallback: function (data) {
         if (!data || data.error) {
             W.logger('log', 'Error getting events', data);
@@ -151,38 +192,53 @@ W.Session = W.Evented.extend({
             var evt = null, item = null;
             while (data.events.length) {
                 evt = data.events.shift();
-                item = this._items[evt.i];
-                // skip not loaded items
-                if (!item) {
-                    continue;
-                }
-                // message received
-                if (evt.t === 'm') {
-                    //update last message
-                    item.lmsg = evt.d;
-                    this.fire('lastMessageChanged', evt);
-                    // update position
-                    if (evt.d.pos) {
-                        item.pos = evt.d.pos;
-                        this.fire('positionChanged', evt);
+                if (evt.i > 0) {
+                    item = this._items[evt.i];
+                    // skip not loaded items
+                    if (!item) {
+                        continue;
                     }
-                // item has been deleted
-                } else if (evt.t === 'd') {
-                    this.fire('itemDeleted', item);
-                    this._unregisterItem(evt.i);
-                // data update event
-                } else if (evt.t === 'u') {
-                    for (var k in evt.d) {
-                        if (k === 'prpu') {
-                            // update custom propery
-                            W.extend(item['prp'], evt.d['prpu']);
-                        } else {
-                            item[k] = evt.d[k];
+                    // message received
+                    if (evt.t === 'm') {
+                        //update last message
+                        item.lmsg = evt.d;
+                        this.fire('lastMessageChanged', evt);
+                        // update position
+                        if (evt.d.pos) {
+                            item.pos = evt.d.pos;
+                            this.fire('positionChanged', evt);
                         }
+                    // item has been deleted
+                    } else if (evt.t === 'd') {
+                        this.fire('itemDeleted', item);
+                        this._unregisterItem(evt.i);
+                    // data update event
+                    } else if (evt.t === 'u') {
+                        for (var k in evt.d) {
+                            if (k === 'prpu') {
+                                // update custom propery
+                                W.extend(item['prp'], evt.d['prpu']);
+                            } else if (k === 'prms') {
+                                if (typeof evt.d['prms']['posinfo'] !== 'undefined') {
+                                    item.pos = evt.d['prms']['posinfo'].v;
+                                    if (typeof evt.d['prms']['speed'] !== 'undefined') {
+                                        item.pos.s = evt.d['prms']['speed'].v;
+                                    }
+                                    this.fire('positionChanged', evt);
+                                }
+                                this.fire('messageParamsChanged', evt);
+                            } else {
+                                item[k] = evt.d[k];
+                            }
+                        }
+                        this.fire('itemChanged', evt);
+                    } else {
+                        W.logger('log', 'unknown event', JSON.stringify(evt));
                     }
-                    this.fire('itemChanged', evt);
-                } else {
-                    W.logger('log', 'unknown event', JSON.stringify(evt));
+                } else if (evt.i === -3) {
+                    // changed billing features avaible for current user
+                    this._features = evt.d;
+                    this.fireEvent('featuresChanged');
                 }
             }
         }

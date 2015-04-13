@@ -108,7 +108,7 @@ var app = (function () {
 		url = url || 'https://hst-api.wialon.com';
 
 		// init session
-		session = new W.Session('https://hst-api.wialon.com', {eventsTimeout: 3});
+		session = new W.Session(url, {eventsTimeout: 3});
 		// login
 		session.execute('core/login', {user: user, password: password}, function (data) { // login callback
 			// if error code - print error message
