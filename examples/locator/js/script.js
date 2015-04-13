@@ -34,7 +34,7 @@ var app = (function () {
 			showUnits();
 		});
 		// register event listener
-		session.on('messageRegistered', handleParamsChange);
+		session.on('positionChanged', handlePositionChange);
 	}
 
 	/** Show units on map and bind event
@@ -70,10 +70,10 @@ var app = (function () {
 		}
 	}
 
-	/** Message parameters event handler
+	/** Position changed event handler
 	 * @param {Event} evt
 	 */
-	function handleParamsChange(evt) {
+	function handlePositionChange(evt) {
 		// get data from evt
 		var data = evt.d;
 		var pos = data.pos;
@@ -108,7 +108,7 @@ var app = (function () {
 		url = url || 'https://hst-api.wialon.com';
 
 		// init session
-		session = new W.Session('https://hst-api.wialon.com', {eventsTimeout: 2});
+		session = new W.Session('https://hst-api.wialon.com', {eventsTimeout: 3});
 		// login
 		session.execute('core/login', {user: user, password: password}, function (data) { // login callback
 			// if error code - print error message

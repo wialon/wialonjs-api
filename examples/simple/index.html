@@ -28,10 +28,17 @@
 		});
 		// listen events
 		sess
-			.on('messageRegistered', function() {
-				console.log(arguments);
-			}).on('itemDeleted', function() {
-				console.log(arguments);
+			.on('lastMessageChanged', function() {
+				console.log('lastMessageChanged', arguments);
+			})
+			.on('positionChanged', function() {
+				console.log('positionChanged', arguments);
+			})
+			.on('itemChanged', function() {
+				console.log('itemChanged', arguments);
+			})
+			.on('itemDeleted', function() {
+				console.log('itemDeleted', arguments);
 			});
 	</script>
 </body>

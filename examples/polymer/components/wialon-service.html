@@ -17,7 +17,7 @@
             self.session = new W.Session('https://hst-api.wialon.com', {
                 eventsTimeout: 5
             });
-            // login
+            // change 'user' and 'password' to your demo account
             self.session.execute('core/login', {user: 'wialon_test', password: 'test'}, function (data) {
                 console.log('login callback', data);
                 // load all unit in session

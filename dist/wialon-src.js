@@ -733,6 +733,14 @@ W.Session = W.Evented.extend({
                 this._getEventsCallback.bind(this),
                 this._getEventsCallback.bind(this)
             );
+            // schedule new getEvents call
+            if (this.options.eventsTimeout) {
+                clearTimeout(this._eventsInterval);
+                this._eventsInterval = setTimeout(
+                    this.getEvents.bind(this),
+                    this.options.eventsTimeout * 1000
+                );
+            }
         }
     },
 
@@ -760,13 +768,13 @@ W.Session = W.Evented.extend({
 
     /** Get session id, null if not logged in
      */
-    getSid: function(id) {
+    getSid: function() {
         return this._sid;
     },
 
     /** Get current user, null if not logged in
      */
-    getCurrentUser: function(id) {
+    getCurrentUser: function() {
         return this._currentUser;
     },
 
@@ -787,7 +795,7 @@ W.Session = W.Evented.extend({
 
             // start events timer
             if (this.options.eventsTimeout) {
-                this._eventsInterval = setInterval(
+                this._eventsInterval = setTimeout(
                     this.getEvents.bind(this),
                     this.options.eventsTimeout * 1000
                 );
@@ -817,28 +825,27 @@ W.Session = W.Evented.extend({
                 if (evt.t === 'm') {
                     //update last message
                     item.lmsg = evt.d;
+                    this.fire('lastMessageChanged', evt);
                     // update position
                     if (evt.d.pos) {
                         item.pos = evt.d.pos;
-                        this.fire('changePosition', evt);
+                        this.fire('positionChanged', evt);
                     }
-                    this.fire('messageRegistered', evt);
                 // item has been deleted
                 } else if (evt.t === 'd') {
                     this.fire('itemDeleted', item);
                     this._unregisterItem(evt.i);
                 // data update event
-                } if (evt.t === 'u') {
+                } else if (evt.t === 'u') {
                     for (var k in evt.d) {
                         if (k === 'prpu') {
                             // update custom propery
                             W.extend(item['prp'], evt.d['prpu']);
-                            // toDo: fire event
                         } else {
                             item[k] = evt.d[k];
-                            // toDo: fire event
                         }
                     }
+                    this.fire('itemChanged', evt);
                 } else {
                     W.logger('log', 'unknown event', JSON.stringify(evt));
                 }
@@ -898,7 +905,7 @@ W.Session = W.Evented.extend({
         this._currentUser = null;
 
         // clear interval
-        clearInterval(this._eventsInterval);
+        clearTimeout(this._eventsInterval);
     }
 });
 
