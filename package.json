@@ -1,7 +1,7 @@
 {
   "name": "wialonjs-api",
   "version": "0.0.2",
-  "description": "Wialon library, compatible with Wialon Hosting/Local",
+  "description": "A higher-level wrapper around the Wialon Remote API",
   "homepage": "http://sdk.wialon.com/libs/js",
   "repository": {
     "type": "git",
