@@ -41,9 +41,14 @@ W.Session.prototype.api.core = {
     },
 
     duplicate: function(params, callback) {
+        if (!params['sid']) {
+            callback && callback({error: 1});
+        }
+        var sid = params.sid;
+        delete params.sid;
         // Call request
         this._request.api('core/duplicate',
-            {params: params},
+            {params: params, sid: sid},
             this._loginCallback.bind(this, callback)
         );
     }
