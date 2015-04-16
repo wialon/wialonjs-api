@@ -1,12 +1,12 @@
 /**
- wialonjs-api 0.0.1, a JS library for Wialon Remote API
+ wialonjs-api 0.0.3, a JS library for Wialon Remote API
  Copyright (c) 2015, Gurtam (http://gurtam.com)
 */
 (function (window) {/* jshint -W079 */
 /* global define */
 
 var W = {
-    version: '0.0.1',
+    version: '0.0.3',
     debug: false
 };
 
@@ -1032,9 +1032,14 @@ W.Session.prototype.api.core = {
     },
 
     duplicate: function(params, callback) {
+        if (!params['sid']) {
+            callback && callback({error: 1});
+        }
+        var sid = params.sid;
+        delete params.sid;
         // Call request
         this._request.api('core/duplicate',
-            {params: params},
+            {params: params, sid: sid},
             this._loginCallback.bind(this, callback)
         );
     }
