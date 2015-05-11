@@ -3,7 +3,7 @@
 
 W.Session = W.Evented.extend({
     options: {
-        eventsTimeout: 10,
+        eventsTimeout: 10
     },
 
     api: {},

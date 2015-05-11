@@ -16,10 +16,11 @@ W.Request = W.Class.extend({
 
     /** Constructor
      */
-    initialize: function (url, options) {
+    initialize: function (url, path, options) {
         options = W.setOptions(this, options);
+        path = path || '/wialon/post.html';
 
-        this._url = this._createFullUrl(url) + '/wialon/post.html';
+        this._url = this._createFullUrl(url) + path;
         this._id = this._url;
 
         // create iframe
@@ -61,6 +62,8 @@ W.Request = W.Class.extend({
             } else {
                 this._requests.push(sdata);
             }
+        } else {
+            error();
         }
     },
 
