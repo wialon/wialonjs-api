@@ -9,7 +9,7 @@ W.Session.include({
         routing: null
     },
     /** Get base URL for GIS service
-    */
+     */
     getBaseGisUrl: function(gisType) {
         if (!this.options.internalGis && this._url !== '') {
             // extract DNS of Wialon server
@@ -31,7 +31,7 @@ W.Session.include({
     },
 
     /** Detect location for text for coordinates
-    */
+     */
     getLocations: function(params, callback) {
         // Get correct path
         var _url = this.getBaseGisUrl('geocode');

@@ -8,6 +8,7 @@ W.Session = W.Evented.extend({
 
     api: {},
 
+    _cache: {},
     _request: null,
     _serverTime: 0,
     _eventsInterval: 0,
