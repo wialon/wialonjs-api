@@ -1226,7 +1226,7 @@ W.Session.include({
 
     /** Detect location for text for coordinates
      */
-    getLocations: function(params, callback) {
+    getLocations: function(params, force, callback) {
         // Get correct path
         var _url = this.getBaseGisUrl('geocode');
         // Geocoding (getLocations) params, SAG
@@ -1249,6 +1249,10 @@ W.Session.include({
             callback(2);
             return;
         }
+        if (!force && ((_url + '/gis_geocode') in this._cache)) {
+            var _cache = this._cache[_url + '/gis_geocode'];
+            return callback.apply(_cache[0], _cache[1]);
+        }
         // Check if geocode request is initialized
         if (!(this._gis.geocode instanceof W.Request)) {
             var _path = this.getBaseGisUrl('geocode') !== '' ? '/gis_post?2' : '/wialon/post.html?2';
@@ -1258,7 +1262,11 @@ W.Session.include({
         if ((this._currentUser === Object(this._currentUser)) && ('id' in this._currentUser)) {
             params.uid = this._currentUser.id;
         }
-        this._gis.geocode.send(_url + '/gis_geocode', params, callback, callback);
+        var _self = this;
+        this._gis.geocode.send(_url + '/gis_geocode', params, function() {
+            _self._cache[_url + '/gis_geocode'] = [this, arguments];
+            callback.apply(this, arguments);
+        }, callback);
     }
 });
 
