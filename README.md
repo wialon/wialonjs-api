@@ -42,6 +42,7 @@ npm install wialonjs-api
 * Pure JS login [demo](examples/simple)
 * Pure JS locator [demo](examples/locator)
 * [Polymer](https://www.polymer-project.org) [demo](examples/polymer)
+* [AngularJS](https://www.angularjs.org) [demo](examples/angular)
 
 ## API
 Library all library classes use `W` namespace.
