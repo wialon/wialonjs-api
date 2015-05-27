@@ -30,7 +30,7 @@ W.Session.include({
         return this._url;
     },
 
-    /** Detect location for text for coordinates
+    /** Detect location for coordinates
      */
     getLocations: function(params, force, callback) {
         // Get correct path

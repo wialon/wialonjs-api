@@ -74,6 +74,10 @@ cache results, can execute `avl_event` automatically, etc.
     <td>eventsTimeout</td>
     <td>Timeout for auto executing `avl_evts` request. Set `0` to prevent `avl_evts` request sending. Default: 10 (sec).</td>
 </tr>
+<tr>
+    <td>internalGis</td>
+    <td>Boolean flag to allow to use intertnal GIS service. Default: false.</td>
+</tr>
 </table>
 
 #### Methods
@@ -117,6 +121,42 @@ cache results, can execute `avl_event` automatically, etc.
 <tr>
     <td><i>getSid</i></td>
     <td>Return session id or null if not logged in</td>
+</tr>
+<tr>
+    <td><i>getBaseGisUrl</i></td>
+    <td>Return GIS service url (e.g. https://render-maps.wialon.com/hst-api.wialon.com)</td>
+</tr>
+<tr>
+    <td><i>getLocations</i></td>
+    <td>Detect location for provided coordinates</td>
+</tr>
+<tr>
+    <td><i>getCurrentTime</i></td>
+    <td>Return current server time</td>
+</tr>
+<tr>
+    <td><i>getTimeZone</i></td>
+    <td>Return server timezone</td>
+</tr>
+<tr>
+    <td><i>getTimeZoneOffset</i></td>
+    <td>Return server timezone offset, in seconds</td>
+</tr>
+<tr>
+    <td><i>getDSTOffset</i></td>
+    <td>Return DST offset for specified timezone, in seconds</td>
+</tr>
+<tr>
+    <td><i>getUserTime</i></td>
+    <td>Convert absolute time to user time</td>
+</tr>
+<tr>
+    <td><i>getLocale</i></td>
+    <td>Return user localization settings</td>
+</tr>
+<tr>
+    <td><i>updateLocale</i></td>
+    <td>Update user localization settings</td>
 </tr>
 </table>
 
