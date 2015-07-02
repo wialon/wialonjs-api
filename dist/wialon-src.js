@@ -1224,7 +1224,7 @@ W.Session.include({
         return this._url;
     },
 
-    /** Detect location for text for coordinates
+    /** Detect location for coordinates
      */
     getLocations: function(params, force, callback) {
         // Get correct path
@@ -1558,6 +1558,19 @@ W.Session.prototype.api.core = {
         // Call request
         this._request.api('core/duplicate',
             {params: params, sid: sid},
+            this._loginCallback.bind(this, callback)
+        );
+    }
+};
+
+/** Remote Api 'token' service methods
+ */
+
+W.Session.prototype.api.token = {
+    login: function(params, callback) {
+        // Call request
+        this._request.api('token/login',
+            {params: params},
             this._loginCallback.bind(this, callback)
         );
     }

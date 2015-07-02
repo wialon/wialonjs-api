@@ -8,7 +8,8 @@ var deps = {
           'base/Session.js',
           'base/Session.Gis.js',
           'base/Session.Locale.js',
-          'api/core.js'
+          'api/core.js',
+          'api/token.js'
           ],
     desc: 'The core of the library, including OOP, events, basic units.'
   }
