@@ -149,11 +149,12 @@ W.Session = W.Evented.extend({
             W.logger('Login success');
 
             // set baseUrl for Wialon & GIS SDK
-            if (typeof data.base_url !== 'undefined' && data.base_url !== this.getBaseUrl()) {
+            if (data.base_url && data.base_url !== this.getBaseUrl()) {
                 this._url = data.base_url;
                 // re-init request
+                var counter = this._request._counter;
                 this._request.destroy();
-                this._request = new W.Request(this._url);
+                this._request = new W.Request(this._url, '', {}, counter);
             }
 
             // store login response data

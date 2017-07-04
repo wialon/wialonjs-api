@@ -16,12 +16,17 @@ W.Request = W.Class.extend({
 
     /** Constructor
      */
-    initialize: function (url, path, options) {
+    initialize: function (url, path, options, counter) {
         options = W.setOptions(this, options);
         path = path || '/wialon/post.html';
 
         this._url = this._createFullUrl(url) + path;
         this._id = this._url;
+
+        // redefine counter
+        if (counter) {
+            this._counter = counter;
+        }
 
         // create iframe
         this._io = document.createElement('iframe');
@@ -30,7 +35,9 @@ W.Request = W.Class.extend({
 
         // bind events
         this._io.onload = this._frameLoaded.bind(this);
-        window.addEventListener('message', this._receiveMessage.bind(this), false);
+
+        this._receiveMessageHandler = this._receiveMessage.bind(this);
+        window.addEventListener('message', this._receiveMessageHandler, false);
 
         // append iframe to body
         document.body.appendChild(this._io);
@@ -39,7 +46,7 @@ W.Request = W.Class.extend({
     /** Destroy
      */
     destroy: function() {
-        window.removeEventListener('message', this._receiveMessage.bind(this), false);
+        window.removeEventListener('message', this._receiveMessageHandler);
         document.body.removeChild(this._io);
     },
 
