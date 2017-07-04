@@ -24,11 +24,10 @@ npm install wialonjs-api
     });
 
     // set Remote API 'svc' param
-    var svc = 'core/login';
+    var svc = 'token/login';
     // set Remote API 'params' param
     var params = {
-        user: 'wialon_test',
-        password: 'test'
+        token: 'YOUR TOKEN'
     };
     // Execute request
     sess.execute(svc, params, function(data) {

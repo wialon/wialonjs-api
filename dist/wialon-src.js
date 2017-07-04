@@ -1,6 +1,6 @@
 /**
  wialonjs-api 0.0.4, a JS library for Wialon Remote API
- Copyright (c) 2015, Gurtam (http://gurtam.com)
+ Copyright (c) 2015-2017, Gurtam (http://gurtam.com)
 */
 (function (window) {/* jshint -W079 */
 /* global define */
@@ -736,6 +736,13 @@ W.Request = W.Class.extend({
         document.body.appendChild(this._io);
     },
 
+    /** Destroy
+     */
+    destroy: function() {
+        window.removeEventListener('message', this._receiveMessage.bind(this), false);
+        document.body.removeChild(this._io);
+    },
+
     /** Execute simple Remote API request
      */
     api: function (svc, params, callback) {
@@ -1014,6 +1021,14 @@ W.Session = W.Evented.extend({
             W.logger('warn', 'Login error');
         } else {
             W.logger('Login success');
+
+            // set baseUrl for Wialon & GIS SDK
+            if (typeof data.base_url !== 'undefined' && data.base_url !== this.getBaseUrl()) {
+                this._url = data.base_url;
+                // re-init request
+                this._request.destroy();
+                this._request = new W.Request(this._url);
+            }
 
             // store login response data
             this._sid = data.eid;
@@ -1469,7 +1484,7 @@ W.Session.include({
     /** Convert absolute time to user time - used in format and print methods
      */
     getUserTime: function(absVal, localTimeZone) {
-        localTimeZone = localTimeZone != null ? localTimeZone : true;
+        localTimeZone = localTimeZone !== null ? localTimeZone : true;
         absVal += this.getDSTOffset(absVal) + this.getTimeZoneOffset();
         return absVal - (!localTimeZone ? W.Util.time.getTimeZoneOffset() : 0);
     },

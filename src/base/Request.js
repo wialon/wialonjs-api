@@ -36,6 +36,13 @@ W.Request = W.Class.extend({
         document.body.appendChild(this._io);
     },
 
+    /** Destroy
+     */
+    destroy: function() {
+        window.removeEventListener('message', this._receiveMessage.bind(this), false);
+        document.body.removeChild(this._io);
+    },
+
     /** Execute simple Remote API request
      */
     api: function (svc, params, callback) {

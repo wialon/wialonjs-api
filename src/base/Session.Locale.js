@@ -193,7 +193,7 @@ W.Session.include({
     /** Convert absolute time to user time - used in format and print methods
      */
     getUserTime: function(absVal, localTimeZone) {
-        localTimeZone = localTimeZone != null ? localTimeZone : true;
+        localTimeZone = localTimeZone !== null ? localTimeZone : true;
         absVal += this.getDSTOffset(absVal) + this.getTimeZoneOffset();
         return absVal - (!localTimeZone ? W.Util.time.getTimeZoneOffset() : 0);
     },

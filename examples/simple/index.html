@@ -16,8 +16,8 @@
 		var sess = new W.Session('https://hst-api.wialon.com', {
 			eventsTimeout: 5
 		});
-		// change 'user' and 'password' to your demo account
-		sess.execute('core/login', {user: 'wialon_test', password: 'test'}, function(data) {
+		// change 'YOUR TOKEN' to your
+		sess.execute('token/login', {token: 'YOUR TOKEN'}, function(data) {
 			console.log('login callback', data);
 
 			var params = {spec:[{"type":"type","data":"avl_unit","flags":0x401,"mode":0}]};
