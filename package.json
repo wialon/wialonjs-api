@@ -1,6 +1,6 @@
 {
   "name": "wialonjs-api",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A higher-level wrapper around the Wialon Remote API",
   "homepage": "http://sdk.wialon.com/libs/js",
   "repository": {
@@ -10,7 +10,7 @@
   "devDependencies": {
     "copyfiles": "0.1.0",
     "jake": "~8.0.10",
-    "uglify-js": "~2.4.16",
+    "uglify-js": "~2.6.0",
     "jshint": "~2.6.3",
     "jscs": "~1.12.0"
   },
