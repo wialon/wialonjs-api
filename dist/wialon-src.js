@@ -1,6 +1,6 @@
 /**
  wialonjs-api 0.0.4, a JS library for Wialon Remote API
- Copyright (c) 2015-2017, Gurtam (http://gurtam.com)
+ Copyright (c) 2015-2018, Gurtam (http://gurtam.com)
 */
 (function (window) {/* jshint -W079 */
 /* global define */
@@ -1152,6 +1152,8 @@ W.Session = W.Evented.extend({
                     this.fire('featuresChanged');
                 }
             }
+            // fire event after avl_evts
+            this.fire('sessionUpdated');
         }
     },
 
