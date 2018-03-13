@@ -5,10 +5,6 @@ Lightweight and flexible wrapper for Wialon Remote API
 throught [Remote API](http://sdk.wialon.com/wiki/en/sidebar/remoteapi/apiref/apiref)
 
 ## Installation
-Using [Bower](http://bower.io/)
-```bash
-bower install wialonjs-api
-```
 Using [npm](https://www.npmjs.com/)
 ```bash
 npm install wialonjs-api

@@ -271,6 +271,8 @@ W.Session = W.Evented.extend({
                     this.fire('featuresChanged');
                 }
             }
+            // fire event after avl_evts
+            this.fire('sessionUpdated');
         }
     },
 
