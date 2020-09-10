@@ -15,6 +15,12 @@ W.Session = W.Evented.extend({
 
     _sid: null,
     _url: null,
+
+    _gisRenderUrl: 'https://render-maps.wialon.com',
+    _gisSearchUrl: 'https://search-maps.wialon.com',
+    _gisGeocodeUrl: 'https://geocode-maps.wialon.com',
+    _gisRoutingUrl: 'https://routing-maps.wialon.com',
+
     _items: {},
     _classes: {},
     _features: {},
@@ -155,6 +161,20 @@ W.Session = W.Evented.extend({
                 var counter = this._request._counter;
                 this._request.destroy();
                 this._request = new W.Request(this._url, '', {}, counter);
+            }
+
+            // reassign GIS urls
+            if (data.gis_render) {
+                this._gisRenderUrl = data.gis_render.replace(/\/+$/, '');
+            }
+            if (data.gis_geocode) {
+                this._gisGeocodeUrl = data.gis_geocode.replace(/\/+$/, '');
+            }
+            if (data.gis_search) {
+                this._gisSearchUrl = data.gis_search.replace(/\/+$/, '');
+            }
+            if (data.gis_routing) {
+                this._gisRoutingUrl = data.gis_routing.replace(/\/+$/, '');
             }
 
             // store login response data

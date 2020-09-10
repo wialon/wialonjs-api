@@ -16,14 +16,15 @@ W.Session.include({
             // from base URL (e.g. http://hst-api.wialon.com)
             var arr = this._url.split('//');
             if (arr.length >= 2) {
-                if (gisType === 'render') {
-                    return arr[0] + '//render-maps.wialon.com/' + arr[1];
-                } else if (gisType === 'search') {
-                    return arr[0] + '//search-maps.wialon.com/' + arr[1];
-                } else if (gisType === 'geocode') {
-                    return arr[0] + '//geocode-maps.wialon.com/' + arr[1];
-                } else if (gisType === 'routing') {
-                    return arr[0] + '//routing-maps.wialon.com/' + arr[1];
+                var endpoint = {
+                    render: this._gisRenderUrl,
+                    search: this._gisSearchUrl,
+                    geocode: this._gisGeocodeUrl,
+                    routing: this._gisRoutingUrl
+                }[gisType];
+
+                if (endpoint) {
+                    return endpoint + '/' + arr[1];
                 }
             }
         }

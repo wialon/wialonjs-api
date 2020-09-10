@@ -1,6 +1,6 @@
 {
   "name": "wialonjs-api",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A higher-level wrapper around the Wialon Remote API",
   "homepage": "http://sdk.wialon.com/libs/js",
   "repository": {
@@ -10,15 +10,18 @@
   "devDependencies": {
     "copyfiles": "0.1.0",
     "jake": "~8.0.10",
-    "uglify-js": "~2.6.0",
-    "jshint": "~2.6.3",
-    "jscs": "~1.12.0"
+    "jscs": "~1.12.0",
+    "jshint": "^2.12.0",
+    "uglify-js": "~2.6.0"
   },
   "main": "dist/wialon-src.js",
   "scripts": {
     "prepublish": "jake"
   },
-  "keywords": ["wialon", "api"],
+  "keywords": [
+    "wialon",
+    "api"
+  ],
   "licenses": [
     {
       "type": "MIT",

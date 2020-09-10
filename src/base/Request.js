@@ -10,8 +10,8 @@ W.Request = W.Class.extend({
     _url: '',
     _io: null,
     _counter: 0,
-    _requests: [],
-    _callbacks: [],
+    _requests: null,
+    _callbacks: null,
     _frameReady: false,
 
     /** Constructor
@@ -27,6 +27,10 @@ W.Request = W.Class.extend({
         if (counter) {
             this._counter = counter;
         }
+
+        // init requests and callback pool
+        this._requests = [];
+        this._callbacks = [];
 
         // create iframe
         this._io = document.createElement('iframe');
