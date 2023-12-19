@@ -1,12 +1,12 @@
 /**
- wialonjs-api 0.0.7, a JS library for Wialon Remote API
+ wialonjs-api 0.0.9, a JS library for Wialon Remote API
  Copyright (c) 2015-2018, Gurtam (http://gurtam.com)
 */
 (function (window) {/* jshint -W079 */
 /* global define */
 
 var W = {
-    version: '0.0.7',
+    version: '0.0.9',
     debug: false
 };
 
@@ -25,7 +25,7 @@ function expose() {
 // define Wialon for Node module pattern loaders, including Browserify
 if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = W;
-// define Wialon as an AMD module
+    // define Wialon as an AMD module
 } else if (typeof define === 'function' && define.amd) {
     define(W);
 }
@@ -845,7 +845,7 @@ W.Request = W.Class.extend({
 
     _frameLoaded: function () {
         if (!this._frameReady) {
-            this._io.contentWindow.postMessage('{id: 0, source:"' + this._id + '"}', this._url);
+            this._io.contentWindow.postMessage(JSON.stringify({id: 0, source: this._id}), this._url);
         } else {
             while (this._requests.length) {
                 this._io.contentWindow.postMessage(this._requests.pop(), this._url);

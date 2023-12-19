@@ -145,7 +145,7 @@ W.Request = W.Class.extend({
 
     _frameLoaded: function () {
         if (!this._frameReady) {
-            this._io.contentWindow.postMessage('{id: 0, source:"' + this._id + '"}', this._url);
+            this._io.contentWindow.postMessage(JSON.stringify({id: 0, source: this._id}), this._url);
         } else {
             while (this._requests.length) {
                 this._io.contentWindow.postMessage(this._requests.pop(), this._url);

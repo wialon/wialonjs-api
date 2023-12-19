@@ -2,7 +2,7 @@
 /* global define */
 
 var W = {
-    version: '0.0.7',
+    version: '0.0.9',
     debug: false
 };
 
@@ -21,7 +21,7 @@ function expose() {
 // define Wialon for Node module pattern loaders, including Browserify
 if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = W;
-// define Wialon as an AMD module
+    // define Wialon as an AMD module
 } else if (typeof define === 'function' && define.amd) {
     define(W);
 }
