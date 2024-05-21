@@ -98,12 +98,7 @@ W.Request = W.Class.extend({
         try {
             data = JSON.parse(evt.data);
         } catch (e) {
-            try {
-                /* jshint evil: true */
-                data = eval('(' + evt.data + ')');
-            } catch (e) {
-                W.logger('warn', 'Invalid JSON');
-            }
+            W.logger('warn', 'Invalid JSON');
         }
 
         if (data.source !== this._id) {
