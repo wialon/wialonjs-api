@@ -1,12 +1,12 @@
 /**
- wialonjs-api 0.0.9, a JS library for Wialon Remote API
+ wialonjs-api 10, a JS library for Wialon Remote API
  Copyright (c) 2015-2018, Gurtam (http://gurtam.com)
 */
 (function (window) {/* jshint -W079 */
 /* global define */
 
 var W = {
-    version: '0.0.9',
+    version: '10',
     debug: false
 };
 
@@ -798,12 +798,7 @@ W.Request = W.Class.extend({
         try {
             data = JSON.parse(evt.data);
         } catch (e) {
-            try {
-                /* jshint evil: true */
-                data = eval('(' + evt.data + ')');
-            } catch (e) {
-                W.logger('warn', 'Invalid JSON');
-            }
+            W.logger('warn', 'Invalid JSON');
         }
 
         if (data.source !== this._id) {
