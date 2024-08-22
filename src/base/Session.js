@@ -34,6 +34,14 @@ W.Session = W.Evented.extend({
 
         this._request = new W.Request(url);
         this._url = url;
+
+        this._sid = null;
+        this._items = {};
+        this._classes = {};
+        this._features = {};
+        this._classItems = {};
+        this._currentUser = null;
+
     },
 
     /** Execute Remote API request
@@ -206,6 +214,9 @@ W.Session = W.Evented.extend({
             W.logger('Logout success');
 
             this._destroy();
+            if (this._request) {
+                this._request.destroy();
+            }
         }
 
         // return data in callback
@@ -338,13 +349,13 @@ W.Session = W.Evented.extend({
         }
     },
 
-    _destroy: function() {
+    _destroy: function () {
         this._sid = null;
         this._url = null;
-        this._items = null;
-        this._classes = null;
-        this._features = null;
-        this._classItems = null;
+        this._items = {};
+        this._classes = {};
+        this._features = {};
+        this._classItems = {};
         this._currentUser = null;
 
         // clear interval

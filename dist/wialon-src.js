@@ -1,12 +1,12 @@
 /**
- wialonjs-api 0.0.10, a JS library for Wialon Remote API
+ wialonjs-api 0.0.11, a JS library for Wialon Remote API
  Copyright (c) 2015-2018, Gurtam (http://gurtam.com)
 */
 (function (window) {/* jshint -W079 */
 /* global define */
 
 var W = {
-    version: '0.0.10',
+    version: '0.0.11',
     debug: false
 };
 
@@ -914,6 +914,14 @@ W.Session = W.Evented.extend({
 
         this._request = new W.Request(url);
         this._url = url;
+
+        this._sid = null;
+        this._items = {};
+        this._classes = {};
+        this._features = {};
+        this._classItems = {};
+        this._currentUser = null;
+
     },
 
     /** Execute Remote API request
@@ -1086,6 +1094,9 @@ W.Session = W.Evented.extend({
             W.logger('Logout success');
 
             this._destroy();
+            if (this._request) {
+                this._request.destroy();
+            }
         }
 
         // return data in callback
@@ -1218,13 +1229,13 @@ W.Session = W.Evented.extend({
         }
     },
 
-    _destroy: function() {
+    _destroy: function () {
         this._sid = null;
         this._url = null;
-        this._items = null;
-        this._classes = null;
-        this._features = null;
-        this._classItems = null;
+        this._items = {};
+        this._classes = {};
+        this._features = {};
+        this._classItems = {};
         this._currentUser = null;
 
         // clear interval
