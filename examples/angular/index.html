@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-    <script src="./../../../dist/wialon-src.js"></script>
+    <script src="./../../dist/wialon-src.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js"></script>
     <script>
         // patch native window.W
@@ -69,8 +69,8 @@
                 $scope.$apply();
             });
         });
-        // change 'user' and 'password' to your demo account
-        session.execute('core/login', {user: 'wialon_test', password: 'test'}, function (data) {
+        // change 'YOUR TOKEN' to your demo account token
+        session.execute('token/login', {token: 'YOUR TOKEN'}, function (data) {
             console.log('login callback', data);
             // load all unit in session
             var params = {spec:[{'type':'type', 'data':'avl_unit', 'flags':0x411, 'mode':0}]};

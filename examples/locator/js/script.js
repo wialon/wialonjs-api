@@ -100,17 +100,18 @@ var app = (function () {
 	}
 
 	/** App login
-	 * @param {String} user   wialon username
-	 * @param {String} password   password
+	 * @param {String} token wialon token
 	 * @param {String} url   server host url (@default: 'https://hst-api.wialon.com')
 	 */
-	self.login = function (user, password, url) {
+	self.login = function (token, url) {
 		url = url || 'https://hst-api.wialon.com';
 
 		// init session
 		session = new W.Session(url, {eventsTimeout: 3});
 		// login
-		session.execute('core/login', {user: user, password: password}, function (data) { // login callback
+		var svc = 'token/login'
+		var params = {'token': token}
+		session.execute(svc, params, function (data) { // login callback
 			// if error code - print error message
 			if (data.error) {
 				msg('Login error');
@@ -130,9 +131,9 @@ var app = (function () {
 	self.initialize = function () {
 		// bind login function to click
 		document.getElementById('loginBtn').onclick = function () {
-			var user = document.getElementById('username').value;
-			var password = document.getElementById('password').value;
-			self.login(user, password);
+			var token = document.getElementById('token_value').value;
+			self.login(token);
+
 		};
 		// create a map in the "map" div
 		map = L.map('map').setView([52.32728615559, 9.798388481140], 14);
