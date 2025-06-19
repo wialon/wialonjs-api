@@ -16,7 +16,7 @@
 		var sess = new W.Session('https://hst-api.wialon.com', {
 			eventsTimeout: 5
 		});
-		// change 'YOUR TOKEN' to your
+		// change 'YOUR TOKEN' to your demo account token
 		sess.execute('token/login', {token: 'YOUR TOKEN'}, function(data) {
 			console.log('login callback', data);
 

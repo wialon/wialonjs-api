@@ -58,7 +58,7 @@ cache results, can execute `avl_event` automatically, etc.
     var sess = new W.Session(url, options);
 
     // login
-    sess.execute('core/login', {user: 'wialon_test', password: 'test'}, function (data) {
+    sess.execute('token/login', {token: 'your_token'}, function (data) {
         // login callback
         // sid automatically saved, you can exec next request
     });
@@ -197,19 +197,19 @@ Helps to performs remote requests
     // create Request instance
     var req = new W.Request('https://hst-api.wialon.com');
 
-    // execute 'core/login' request with 'api' method
+    // execute 'token/login' request with 'api' method
     req.api(
-        'core/login',
-        {user: 'wialon_test', password: 'test'},
+        'token/login',
+        {token: 'your_token'},
         function() {
             // callback
         }
     );
 
-    // execute 'core/login' request with 'send' method
+    // execute 'token/login' request with 'send' method
     req.send(
-        '/wialon/ajax.html?svc=core/login',
-        {user: 'wialon_test', password: 'test'},
+        '/wialon/ajax.html?svc=token/login',
+        {token: 'your_token'},
         function success() {
             // success callback
         },
